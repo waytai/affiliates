@@ -16,6 +16,7 @@ class ImageVariationInline(admin.TabularInline):
     model = models.ImageBannerVariation
     fields = ('color', 'locale', 'image')
     formfield_overrides = {ImageField: {'widget': ImageWidget}}
+    extra = 0
 
 
 class ImageBannerModelAdmin(BaseModelAdmin):

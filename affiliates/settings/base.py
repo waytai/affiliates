@@ -147,6 +147,7 @@ JINGO_EXCLUDE_APPS = [
     'browserid',
     'smuggler',
     'fb',
+    'registration',
 ]
 
 # Activate statsd patches to time database and cache hits.
