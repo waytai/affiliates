@@ -7,8 +7,7 @@ from mock import Mock, patch
 from nose.tools import assert_raises, eq_
 
 from affiliates.banners import views
-from affiliates.banners.tests import (CategoryFactory, ImageBannerFactory,
-                                      ImageBannerVariationFactory)
+from affiliates.banners.tests import CategoryFactory
 from affiliates.base.tests import patch_super, TestCase
 
 
@@ -75,7 +74,6 @@ class CustomizeBannerViewTests(TestCase):
             eq_(response, redirect.return_value)
             redirect.assert_called_with(link)
 
-        link.save.assert_called_with()
         self.view.banner.create_link.assert_called_with(self.view.request.user, foo='bar', baz=1)
 
 
