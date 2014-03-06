@@ -10,7 +10,7 @@ class CategoryFactory(DjangoModelFactory):
 
 
 class BannerFactory(DjangoModelFactory):
-    FACTORY_FOR = models.Banner
+    ABSTRACT_FACTORY = True
 
     category = SubFactory(CategoryFactory)
     name = Sequence(lambda n: 'test{0}'.format(n))

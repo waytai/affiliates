@@ -1,7 +1,7 @@
 from datetime import date
 
 from mock import ANY, Mock, mock_open, patch
-from nose.tools import assert_raises, eq_
+from nose.tools import eq_
 from oauth2client.client import Error as OAuth2Error
 
 from affiliates.base.tests import TestCase
@@ -24,7 +24,7 @@ class AnalyticsServiceTests(TestCase):
         """If the keyfile can't be found, raise AnalyticsError."""
         with self._mock_open() as _open:
             _open.side_effect = IOError
-            with assert_raises(AnalyticsError):
+            with self.assertRaises(AnalyticsError):
                 AnalyticsService('keyfile.p12', 'a@example.com', 125)
 
     def test_init_oauth2error(self):
@@ -34,7 +34,7 @@ class AnalyticsServiceTests(TestCase):
         """
         with self._mock_open(read_data='asdf'):
             self.build_service.side_effect = OAuth2Error
-            with assert_raises(AnalyticsError):
+            with self.assertRaises(AnalyticsError):
                 AnalyticsService('keyfile.p12', 'a@example.com', 125)
 
     def test_init(self):
@@ -78,7 +78,7 @@ class AnalyticsServiceTests(TestCase):
         # initialize that is annoying to provide.
         with patch('affiliates.links.google_analytics.HttpError', Exception) as HttpError:
             query.execute.side_effect = HttpError
-            with assert_raises(AnalyticsError):
+            with self.assertRaises(AnalyticsError):
                 self.service._get_data()
 
     def test_get_data(self):
@@ -93,7 +93,7 @@ class AnalyticsServiceTests(TestCase):
         """
         self.service._get_data = Mock(return_value={'containsSampledData': True})
 
-        with assert_raises(AnalyticsError):
+        with self.assertRaises(AnalyticsError):
             self.service.get_clicks_for_date(date(2014, 1, 1))
 
     def test_get_clicks_for_date_sampled_data_default(self):

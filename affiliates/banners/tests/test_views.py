@@ -4,7 +4,7 @@ from django.http import Http404
 from django.test.client import RequestFactory
 
 from mock import Mock, patch
-from nose.tools import assert_raises, eq_
+from nose.tools import eq_
 
 from affiliates.banners import views
 from affiliates.banners.tests import CategoryFactory
@@ -18,7 +18,7 @@ class BannerListViewTests(TestCase):
 
     def test_dispatch_category_404(self):
         """If no category exists with a matching pk, raise Http404."""
-        with assert_raises(Http404):
+        with self.assertRaises(Http404):
             self.view.dispatch(self.factory.get('/'), category_pk='99999')
 
     def test_dispatch_category_exists(self):

@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 
-from nose.tools import assert_raises, eq_, ok_
+from nose.tools import eq_, ok_
 from mock import Mock, patch
 
 from affiliates.banners.models import Banner
@@ -23,7 +23,7 @@ class CategoryTests(TestCase):
 
         root.clean()  # No layers is fine!
         child.clean()  # 1 layer is fine!
-        with assert_raises(ValidationError):
+        with self.assertRaises(ValidationError):
             grandchild.clean()  # 2 layers is no bueno!
 
 

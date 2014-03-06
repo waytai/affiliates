@@ -4,7 +4,7 @@ from django.core.management.base import CommandError
 from django.db import IntegrityError
 
 from mock import patch
-from nose.tools import assert_raises, ok_
+from nose.tools import ok_
 
 from affiliates.base.tests import TestCase
 from affiliates.links.google_analytics import AnalyticsError
@@ -28,7 +28,7 @@ class CollectGADataTests(TestCase):
         If there's an error creating the service, raise a CommandError.
         """
         self.AnalyticsService.side_effect = AnalyticsError
-        with assert_raises(CommandError):
+        with self.assertRaises(CommandError):
             self.command.handle()
 
     def test_error_downloading_click_counts(self):
@@ -37,7 +37,7 @@ class CollectGADataTests(TestCase):
         CommandError.
         """
         self.service.get_clicks_for_date.side_effect = AnalyticsError
-        with assert_raises(CommandError):
+        with self.assertRaises(CommandError):
             self.command.handle()
 
     def test_integrity_error_bulk_create(self):
@@ -54,7 +54,7 @@ class CollectGADataTests(TestCase):
         with patch.object(collect_ga_data, 'DataPoint') as MockDataPoint:
             MockDataPoint.objects.bulk_create.side_effect = IntegrityError
 
-            with assert_raises(CommandError):
+            with self.assertRaises(CommandError):
                 self.command.execute()
 
     def test_success(self):
