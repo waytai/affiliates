@@ -17,8 +17,8 @@ class Migration(DataMigration):
             try:
                 badge_instance = orm['badges.BadgeInstance'].objects.get(pk=banner_instance.pk)
 
-                html = '<a href="{url}"><img src="{src}" alt="{alt}" /></a>'.format(
-                    url=absolutify('/link/banner/{pk}'.format(pk=banner_instance.pk), protocol=''),
+                html = u'<a href="{url}"><img src="{src}" alt="{alt}" /></a>'.format(
+                    url=absolutify(u'/link/banner/{pk}'.format(pk=banner_instance.pk), protocol=''),
                     src=absolutify(banner_instance.image.image.url, protocol=''),
                     alt=ugettext_locale(badge_instance.badge.name, banner_instance.image.locale)
                 )
